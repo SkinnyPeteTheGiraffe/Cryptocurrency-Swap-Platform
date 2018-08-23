@@ -25,7 +25,6 @@ class CreateCoinsTable extends Migration
             $table->string('rpc_password');
             $table->boolean('active_project');
             $table->string('exchanges');
-            $table->string('supported_swaps');
             $table->double('fee');
             $table->timestamps();
         });

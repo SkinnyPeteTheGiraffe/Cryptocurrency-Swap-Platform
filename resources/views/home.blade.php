@@ -27,26 +27,40 @@
                         </li>
                     </ul>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-background coin-card">
-                                <div class="card-body">
-                                    <h6 class="card-category text-info">Resq Chain</h6>
-                                    <h3 class="card-title">OPL <i class="material-icons">arrow_right_alt</i> RESQ</h3>
-                                    <h4 class="card-title">Ratio: 1:3</h4>
-                                    <h4 class="card-title">Fee: 1.2%</h4>
-                                    <a href="#pablo" class="btn btn-white btn-round w-100">
-                                        <i class="material-icons">input</i> Deposit Address
-                                    </a>
-                                    <a href="#pablo" class="btn btn-white btn-round w-100">
-                                        <i class="material-icons">history</i> Swap History
-                                    </a>
-                                    <a href="#pablo" class="btn btn-white btn-round w-100">
-                                        <i class="material-icons">settings</i> Manage
-                                    </a>
+                        @if(count(unserialize(Auth::user()->swap_pairs)) > 0)
+                            @foreach(Auth::user()->get_swap_pairs() as $pair)
+                                <div class="col-md-4">
+                                    <div class="card card-background coin-card">
+                                        <div class="card-body">
+                                            <h6 class="card-category text-info">{{$pair->get_active_coin()->name}}</h6>
+                                            <h3 class="card-title">{{$pair->get_dead_coin()->ticker}} <i class="material-icons">arrow_right_alt</i> {{$pair->get_active_coin()->ticker}}</h3>
+                                            <h4 class="card-title">Ratio: {{$pair->dead_ratio.':'.$pair->active_ratio}}</h4>
+                                            <h4 class="card-title">Fee: {{$pair->get_active_coin()->fee}}%</h4>
+                                            <a href="#pablo" class="btn btn-white btn-round w-100">
+                                                <i class="material-icons">input</i> Deposit Address
+                                            </a>
+                                            <a href="#pablo" class="btn btn-white btn-round w-100">
+                                                <i class="material-icons">history</i> Swap History
+                                            </a>
+                                            <a href="#pablo" class="btn btn-white btn-round w-100">
+                                                <i class="material-icons">settings</i> Manage
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end card -->
                                 </div>
+                            @endforeach
+                        @else
+                            <div class="col-md-4">
+                                <div class="card card-background coin-card">
+                                    <div class="card-body">
+                                        <h6 class="card-category text-info">Add Pairs To Start Swapping</h6>
+                                        <a href="#"><h3 class="card-title"><i class="material-icons" style="font-size: 10rem;">add</i></h3></a>
+                                    </div>
+                                </div>
+                                <!-- end card -->
                             </div>
-                            <!-- end card -->
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use App\SwapPair;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -26,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function get_swap_pairs() {
+        $swap_pairs = [];
+        if(count($this->swap_pairs) > 0) {
+            foreach ($this->swap_pairs as $pair) {
+                $swap_pairs[] = SwapPair::find($pair);
+            }
+        }
+        return $swap_pairs;
+    }
 }

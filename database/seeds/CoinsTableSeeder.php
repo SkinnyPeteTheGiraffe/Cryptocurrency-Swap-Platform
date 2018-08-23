@@ -23,7 +23,6 @@ class CoinsTableSeeder extends Seeder
             'rpc_password'      => 'testing',
             'active_project'    => true,
             'exchanges'         => serialize([['Crex24', 'https://crex24.com/exchange/RESQ-BTC']]),
-            'supported_swaps'   => serialize([]),
             'fee'               => 1.44,
             'created_at'        => Carbon::now()
         ]);
@@ -39,7 +38,6 @@ class CoinsTableSeeder extends Seeder
             'rpc_password'      => 'testing',
             'active_project'    => false,
             'exchanges'         => serialize([]),
-            'supported_swaps'   => serialize([]),
             'fee'               => 0,
             'created_at'        => Carbon::now()
         ]);

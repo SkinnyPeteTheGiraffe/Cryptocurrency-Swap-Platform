@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="price-container">
-                                            <span class="price"> Coins Available To Swap: {{count(unserialize($coin->supported_swaps))}}</span>
+                                            <span class="price"> Coins Available To Swap: {{count($coin->get_swap_pairs())}}</span>
                                         </div>
                                     </div>
                                 </div>
