@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateSwapWalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('swap_wallets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('user_group');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('swap_pairs');
-            $table->rememberToken();
+            $table->integer('user_id');
+            $table->integer('swap_pair_id');
+            $table->string('active_address');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('swap_wallets');
     }
 }

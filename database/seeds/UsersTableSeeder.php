@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
             'email'                 => 'admin@admin.com',
             'password'              => bcrypt('green444'),
             'user_group'            => 1,
-            'deposit_addresses'     => serialize([]),
             'swap_pairs'            => serialize([]),
             'created_at'            => Carbon::now()
         ]);

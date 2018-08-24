@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Coin;
 use App\CoinInfo;
+use App\SwapWallet;
 use App\RPC\RpcClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,19 +65,33 @@ class CoinController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Adds pair to the user's list given the correct post request
      *
      * @return \Illuminate\Http\Response
      */
-    public function add_pair($id)
+    public function add_pair()
     {
+        $id = request('pair_id');
+        $address = request('destination_address');
         if($id) {
             $user = Auth::user();
             $swap_pairs = unserialize($user->swap_pairs);
-            $swap_pairs[] = $id;
-            $user->swap_pairs = serialize($swap_pairs);
-            $user->save();
+            if(!$user->owns_swap_pair($id)) {
+                $this->create_swap_wallet($user, $id, $address);
+                $swap_pairs[] = $id;
+                $user->swap_pairs = serialize($swap_pairs);
+                $user->save();
+            }
         }
-        return view('home');
+        return redirect(route('home'));
     }
+
+    private function create_swap_wallet($user, $id, $address) {
+        SwapWallet::create([
+            'user_id'           => $user->id,
+            'swap_pair_id'      => $id,
+            'active_address'    => $address
+        ]);
+    }
+
 }

@@ -129,9 +129,15 @@
                                                                 <td>{{$pair->dead_ratio.':'.$pair->active_ratio}}</td>
                                                                 <td>{{$pair->get_active_coin()->fee}}%</td>
                                                                 <td class="td-actions text-right">
-                                                                    <a href="{{route('add_pair', $pair->id)}}" class="btn btn-success btn-round">
-                                                                        <i class="material-icons">add</i>
-                                                                    </a>
+                                                                    @if(!Auth::user()->owns_swap_pair($pair->id))
+                                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-pair-modal-{{$pair->dead_id.'_'.$pair->active_id}}">
+                                                                            <i class="material-icons">add</i>
+                                                                        </button>
+                                                                    @else
+                                                                        <button type="button" class="btn btn-disabled" disabled data-toggle="modal" data-target="#add-pair-modal-{{$pair->dead_id.'_'.$pair->active_id}}">
+                                                                            <i class="material-icons">add</i>
+                                                                        </button>
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -154,4 +160,39 @@
             </div>
         </div>
     </div>
+    @if(count($coin->get_swap_pairs()) > 0 && $rpc_client->is_connected())
+        @foreach($coin->get_swap_pairs() as $pair)
+            <!-- Modal -->
+            <div class="modal fade" id="add-pair-modal-{{$pair->dead_id.'_'.$pair->active_id}}"
+                 tabindex="-1" role="dialog" aria-labelledby="add-pair-modal-{{$pair->dead_id.'_'.$pair->active_id}}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="add-pair-modal-{{$pair->dead_id.'_'.$pair->active_id}}-label">
+                                Add Swap Pair For <b>{{$pair->get_dead_coin()->name}}</b> to <b>{{$pair->get_active_coin()->name}}</b>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{{route('add_pair')}}" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" name="pair_id" value="{{ $pair->id }}">
+                                    <label for="address-destination-label">Destination {{$pair->get_active_coin()->name}} Address</label>
+                                    <input name="destination_address" type="text" class="form-control" id="address-destination-label" placeholder="QVFMQiCndRK6xpGN3RP1YSaa65gHV3kdXZ">
+                                </div>
+                                <p class="text-danger">Please ensure you are entering a valid address and is correctly entered! Otherwise you could potentially lose your coins!</p>
+                                <button type="submit" class="btn btn-success">Add Pair</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
 @endsection
