@@ -18,5 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/add/pair/{id}', 'CoinController@add_pair')->name('add_pair');
 Route::get('/supported', 'CoinController@index')->name('supported');
 Route::get('/supported/info/{id}', 'CoinController@info')->name('info');

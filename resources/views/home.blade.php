@@ -36,7 +36,7 @@
                                             <h3 class="card-title">{{$pair->get_dead_coin()->ticker}} <i class="material-icons">arrow_right_alt</i> {{$pair->get_active_coin()->ticker}}</h3>
                                             <h4 class="card-title">Ratio: {{$pair->dead_ratio.':'.$pair->active_ratio}}</h4>
                                             <h4 class="card-title">Fee: {{$pair->get_active_coin()->fee}}%</h4>
-                                            <a href="#pablo" class="btn btn-white btn-round w-100">
+                                            <a href="#pablo" class="btn btn-white btn-round w-100" data-toggle="modal" data-target="#deposit-modal-{{$pair->dead_id.'_'.$pair->active_id}}">
                                                 <i class="material-icons">input</i> Deposit Address
                                             </a>
                                             <a href="#pablo" class="btn btn-white btn-round w-100">
@@ -66,4 +66,40 @@
             </div>
         </div>
     </div>
+    @if(count(unserialize(Auth::user()->swap_pairs)) > 0)
+        @foreach(Auth::user()->get_swap_pairs() as $pair)
+            <!-- Modal -->
+            <div class="modal fade" id="deposit-modal-{{$pair->dead_id.'_'.$pair->active_id}}"
+                 tabindex="-1" role="dialog"
+                 aria-labelledby="deposit-modal-{{$pair->dead_id.'_'.$pair->active_id}}-label"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"
+                                id="deposit-modal-{{$pair->dead_id.'_'.$pair->active_id}}-label">
+                                {{$pair->get_dead_coin()->name}} Deposit Address For Swap
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            To swap {{$pair->get_dead_coin()->name}} for {{$pair->get_active_coin()->name}}, simply
+                            deposit your {{$pair->get_dead_coin()->ticker}} to the given address, and once the payment
+                            has been confirmed your {{$pair->get_active_coin()->ticker}} will automatically be sent to your
+                            destination wallet!
+                            <br>
+                            <h5>Deposit Address</h5>
+                            <p class="pl-1" style="border-radius: 3px; border: 1px solid #1b1e21;">{{Auth::user()->get_wallet_address($pair->dead_id)}}</p>
+                            <p class="text-danger">Please only send <b>{{$pair->get_dead_coin()->name}} ({{$pair->get_dead_coin()->ticker}})</b> to this address! Any other coins will be rejected and lost forever!</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
 @endsection

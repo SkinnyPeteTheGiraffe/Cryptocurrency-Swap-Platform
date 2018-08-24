@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->integer('user_group');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('deposit_addresses');
             $table->string('swap_pairs');
             $table->rememberToken();
             $table->timestamps();

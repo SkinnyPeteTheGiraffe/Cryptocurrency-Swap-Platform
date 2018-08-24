@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\SwapPair;
+use App\RPC\RpcClient;
 
 class Coin extends Model
 {
+    private $rpc_client;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,5 +34,12 @@ class Coin extends Model
             return $pairs;
         }
         return [];
+    }
+
+    public function get_rpc_client() {
+        if(!$this->rpc_client || !$this->rpc_client->is_connected()) {
+            $this->rpc_client =  new RpcClient($this->rpc_user, $this->rpc_password, $this->host, $this->port);
+        }
+        return $this->rpc_client;
     }
 }

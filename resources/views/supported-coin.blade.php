@@ -129,9 +129,9 @@
                                                                 <td>{{$pair->dead_ratio.':'.$pair->active_ratio}}</td>
                                                                 <td>{{$pair->get_active_coin()->fee}}%</td>
                                                                 <td class="td-actions text-right">
-                                                                    <button type="button" rel="tooltip" class="btn btn-success btn-round">
+                                                                    <a href="{{route('add_pair', $pair->id)}}" class="btn btn-success btn-round">
                                                                         <i class="material-icons">add</i>
-                                                                    </button>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach

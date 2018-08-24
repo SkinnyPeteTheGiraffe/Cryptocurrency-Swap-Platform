@@ -6,6 +6,7 @@ use App\Coin;
 use App\CoinInfo;
 use App\RPC\RpcClient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoinController extends Controller
 {
@@ -60,5 +61,22 @@ class CoinController extends Controller
             ->with('coin', $coin)
             ->with('info', $active_coin_info)
             ->with('rpc_client', $rpc_client);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function add_pair($id)
+    {
+        if($id) {
+            $user = Auth::user();
+            $swap_pairs = unserialize($user->swap_pairs);
+            $swap_pairs[] = $id;
+            $user->swap_pairs = serialize($swap_pairs);
+            $user->save();
+        }
+        return view('home');
     }
 }
