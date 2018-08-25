@@ -19,6 +19,9 @@ class CreateSwapPairsTable extends Migration
             $table->integer('active_ratio');
             $table->integer('dead_id');
             $table->integer('dead_ratio');
+            $table->string('active_fee_address');
+            $table->string('active_address');
+            $table->string('dead_address');
             $table->timestamps();
         });
     }

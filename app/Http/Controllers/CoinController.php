@@ -6,11 +6,21 @@ use App\Coin;
 use App\CoinInfo;
 use App\SwapWallet;
 use App\RPC\RpcClient;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CoinController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     private function get_coins_values()
     {
         $active_coins = Coin::where('active_project', true)->get();

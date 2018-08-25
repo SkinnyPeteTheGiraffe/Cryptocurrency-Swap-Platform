@@ -59,6 +59,44 @@
                             </div>
                         @endif
                     </div>
+                    @if(count(Auth::user()->get_swap_wallets()) > 0)
+                    <div class="row">
+                        <h4>Swap History</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Pair</th>
+                                    <th>Input Amount</th>
+                                    <th>Output Amount</th>
+                                    <th>TXID</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(Auth::user()->get_swap_wallets() as $wallet)
+                                    @foreach($wallet->get_swaps() as $swap)
+                                        <tr>
+                                            <td class="text-center">
+                                                {{$swap->get_swap_pair()->get_dead_coin()->ticker}}:{{$swap->get_swap_pair()->get_active_coin()->ticker}}
+                                            </td>
+                                            <td>{{$swap->input_amount}}</td>
+                                            <td>{{$swap->output_amount}}</td>
+                                            <td>{{$swap->get_transaction()->txid}}</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-info">
+                                                    <i class="material-icons">info</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-success">
+                                                    <i class="material-icons">explore</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

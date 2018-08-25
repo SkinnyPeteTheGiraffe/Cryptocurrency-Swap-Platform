@@ -39,11 +39,16 @@ class SwapWallet extends Model
             $coin = Coin::find($swap_pair->active_id);
             if ($coin) {
                 $response = $coin->get_rpc_client()->validateaddress($this->active_address);
-                if (is_bool($response) && $response) {
+                if (key_exists('isvalid', $response) && $response['isvalid']) {
                     return True;
                 }
             }
         }
         return false;
+    }
+
+    public function get_swaps() {
+        $swap_wallets = Swap::where('wallet_id', $this->id)->get();
+        return $swap_wallets;
     }
 }
