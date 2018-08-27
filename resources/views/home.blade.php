@@ -61,40 +61,32 @@
                     </div>
                     @if(count(Auth::user()->get_swap_wallets()) > 0)
                     <div class="row">
-                        <h4>Swap History</h4>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Pair</th>
-                                    <th>Input Amount</th>
-                                    <th>Output Amount</th>
-                                    <th>TXID</th>
-                                    <th class="text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(Auth::user()->get_swap_wallets() as $wallet)
-                                    @foreach($wallet->get_swaps() as $swap)
-                                        <tr>
-                                            <td class="text-center">
-                                                {{$swap->get_swap_pair()->get_dead_coin()->ticker}}:{{$swap->get_swap_pair()->get_active_coin()->ticker}}
-                                            </td>
-                                            <td>{{$swap->input_amount}}</td>
-                                            <td>{{$swap->output_amount}}</td>
-                                            <td>{{$swap->get_transaction()->txid}}</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" class="btn btn-info">
-                                                    <i class="material-icons">info</i>
-                                                </button>
-                                                <button type="button" rel="tooltip" class="btn btn-success">
-                                                    <i class="material-icons">explore</i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="col-md">
+                            <div class="card">
+                                <div class="card-header card-header-icon card-header-success">
+                                    <div class="card-icon">
+                                        <div class="row">
+                                            <i class="pl-1 material-icons">history</i> <span class="pl-1">Swap History</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body mdl-data-table">
+                                    <div class="table-responsive-lg">
+                                        <table class="table" id="swap-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Pair</th>
+                                                <th>Input Amount</th>
+                                                <th>Output Amount</th>
+                                                <th>TXID</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -181,3 +173,38 @@
         @endforeach
     @endif
 @endsection
+
+@push('scripts')
+    <script>
+        $(function() {
+            $('#swap-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('home/swaps') !!}',
+                pagingType: "simple",
+                columnDefs: [
+                    {
+                        targets: [ 0, 1, 2 ],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    },
+                    {
+                        targets: [3, 4],
+                        orderable: false
+                    }
+                ],
+                columns: [
+                    { data: 'pair'},
+                    { data: 'input_amount'},
+                    { data: 'output_amount'},
+                    { data: 'txid', name: 'txid'},
+                    {
+                        data: null, render: function (data) {
+                            return '<div class="row"><div class="col-1"><a href="http://explorer.resqchain.org:3001/tx/' + data.txid +'"><i class="material-icons">explorer</i></a></div>' +
+                                '<div class="col-1"><a href="http://explorer.resqchain.org:3001/tx/\' + data.txid +\'"><i class="material-icons">info</i></a></div></div>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+@endpush

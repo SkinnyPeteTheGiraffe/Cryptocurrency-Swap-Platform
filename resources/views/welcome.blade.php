@@ -12,9 +12,15 @@
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-danger btn-raised btn-lg">
                     <i class="fa fa-play"></i> Watch video
                 </a>
-                <a href="#" target="_blank" class="btn btn-info btn-rose btn-lg">
-                    <i class="material-icons">person_add</i> Sign Up
-                </a>
+                @guest
+                    <a href="{{route('register') }}" class="btn btn-info btn-rose btn-lg">
+                        <i class="material-icons">person_add</i> Sign Up
+                    </a>
+                @else
+                    <a href="{{route('home') }}" class="btn btn-info btn-info btn-lg">
+                        <i class="material-icons">person</i> Dashboard
+                    </a>
+                @endguest
             </div>
             <div class="col-md-2">
             </div>
@@ -24,17 +30,13 @@
         </div>
     </div>
 </div>
-<div class="main main-raised">
+<footer class="footer footer-default pt-5">
     <div class="container">
-    </div>
-</div>
-<footer class="footer footer-default">
-    <div class="container">
-        <nav class="float-left">
+        <nav class="float-left align-middle">
             <ul>
                 <li>
                     <a href="https://www.creative-tim.com">
-                        Creative Tim
+                        Partner Coins
                     </a>
                 </li>
                 <li>
@@ -44,19 +46,18 @@
                 </li>
                 <li>
                     <a href="http://blog.creative-tim.com">
-                        Blog
+                        Statistics
                     </a>
                 </li>
                 <li>
                     <a href="https://www.creative-tim.com/license">
-                        Licenses
+                        Discord
                     </a>
                 </li>
             </ul>
         </nav>
         <div class="copyright float-right">
-            &copy;2018, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Noto</a> for a better web.
+            &copy;2018, made with <i class="material-icons">favorite</i> by Noto.
         </div>
     </div>
 </footer>

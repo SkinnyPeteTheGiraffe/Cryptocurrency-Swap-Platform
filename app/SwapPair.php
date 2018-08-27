@@ -34,4 +34,8 @@ class SwapPair extends Model
         $coin = Coin::find($this->dead_id);
         return $coin;
     }
+
+    public function get_display_name() {
+        return $this->get_dead_coin()->ticker.':'.$this->get_active_coin()->ticker;
+    }
 }

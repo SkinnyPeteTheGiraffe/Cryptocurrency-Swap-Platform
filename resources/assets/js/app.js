@@ -20,6 +20,8 @@ require('./plugins/jasny-bootstrap.min.js');
 require('../demo/vertical-nav.js');
 require('./material-kit.js');
 
+require('datatables');
+
 window.Vue = require('vue');
 
 /**
