@@ -193,16 +193,22 @@
                     }
                 ],
                 columns: [
-                    { data: 'pair'},
-                    { data: 'input_amount'},
-                    { data: 'output_amount'},
+                    { data: 'pair', name:'pair'},
+                    { data: 'input_amount', name: 'input_amount'},
+                    { data: 'output_amount', name: 'output_amount'},
                     { data: 'txid', name: 'txid'},
                     {
                         data: null, render: function (data) {
-                            return '<div class="row"><div class="col-1"><a href="http://explorer.resqchain.org:3001/tx/' + data.txid +'"><i class="material-icons">explorer</i></a></div>' +
-                                '<div class="col-1"><a href="http://explorer.resqchain.org:3001/tx/\' + data.txid +\'"><i class="material-icons">info</i></a></div></div>';
+                            return `<div class="row">
+                                        <div class="col-1">
+                                            <a href="${data.explorer}" target="_blank"><i class="material-icons">explorer</i></a>
+                                        </div>
+                                        <div class="col-1">
+                                        <a href="${data.explorer}"><i class="material-icons">info</i></a>
+                                        </div>
+                                    </div>`;
                         }
-                    }
+                    },
                 ]
             });
         });

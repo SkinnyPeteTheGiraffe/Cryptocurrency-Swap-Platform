@@ -12,7 +12,7 @@ class CoinInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'coin', 'header', 'body',
+        'coin_id', 'header', 'body', 'url_explorer'
     ];
 
     /**

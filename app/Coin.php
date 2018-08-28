@@ -42,4 +42,8 @@ class Coin extends Model
         }
         return $this->rpc_client;
     }
+
+    public function get_coin_info() {
+        return CoinInfo::where('coin_id', $this->id)->first();
+    }
 }

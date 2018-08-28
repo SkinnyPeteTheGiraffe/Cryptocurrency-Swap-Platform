@@ -41,7 +41,7 @@
                             <a class="nav-link" href="{{route("supported")}}"><i class="material-icons">check</i> Supported Coins</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#0"><i class="material-icons">bar_chart</i> Statistics</a>
+                            <a class="nav-link" href="{{route("statistics")}}"><i class="material-icons">bar_chart</i> Statistics</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#0"><i class="material-icons">info</i> About Us</a>

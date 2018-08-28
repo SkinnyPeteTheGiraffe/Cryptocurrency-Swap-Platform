@@ -24,3 +24,5 @@ Route::post('/home/add/pair', 'CoinController@add_pair')->name('add_pair');
 
 Route::get('/supported', 'CoinController@index')->name('supported');
 Route::get('/supported/info/{id}', 'CoinController@info')->name('info');
+
+Route::get('/statistics', 'StatisticsController@index')->name('statistics');

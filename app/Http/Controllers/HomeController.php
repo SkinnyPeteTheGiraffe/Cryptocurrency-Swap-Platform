@@ -47,12 +47,13 @@ class HomeController extends Controller
                 if($wallet->user_id == Auth::user()->id) {
                     $pair = SwapPair::find($data->pair_id);
                     $transaction = Transaction::find($data->transaction_id);
-                    $swap = [
-                        'pair' => $pair->get_display_name(),
-                        'input_amount' => $data->input_amount,
+                    $swap = array(
+                        'pair'          => $pair->get_display_name(),
+                        'input_amount'  => $data->input_amount,
                         'output_amount' => $data->output_amount,
-                        'txid' => $transaction->txid
-                    ];
+                        'txid'          => $transaction->txid,
+                        'explorer'      => $pair->get_active_coin()->get_coin_info()->url_explorer."/tx/".$transaction->txid
+                    );
                     $swaps_out[] = $swap;
                 }
             }

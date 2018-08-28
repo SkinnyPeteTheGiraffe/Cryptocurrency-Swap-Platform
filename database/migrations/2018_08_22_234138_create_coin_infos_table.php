@@ -15,9 +15,10 @@ class CreateCoinInfosTable extends Migration
     {
         Schema::create('coin_infos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('coin');
+            $table->integer('coin_id');
             $table->mediumText('header');
             $table->longText('body');
+            $table->string('url_explorer');
             $table->timestamps();
         });
     }

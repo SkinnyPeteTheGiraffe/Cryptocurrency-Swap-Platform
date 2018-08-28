@@ -9,6 +9,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "fideloper/proxy": "^4.0",
+        "fx3costa/laravelchartjs": "^2.5",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "yajra/laravel-datatables-oracle": "~8.0"
